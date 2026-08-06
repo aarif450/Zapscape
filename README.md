@@ -7,17 +7,17 @@
 <td align="center" width="220">
 <a href="https://github.com/V4bel/ITScape"><img src="assets/sym-itscape.svg" width="140" alt="ITScape"></a>
 <br><b><a href="https://github.com/V4bel/ITScape">ITScape</a></b>
-<br><sub>(CVE-2026-46316)</sub>
+<br><sub>(CVE&#8209;2026&#8209;46316)</sub>
 </td>
 <td align="center" width="220">
 <a href="https://github.com/V4bel/Januscape"><img src="assets/sym-januscape.svg" width="140" alt="Januscape"></a>
 <br><b><a href="https://github.com/V4bel/Januscape">Januscape</a></b>
-<br><sub>(CVE-2026-53359)</sub>
+<br><sub>(CVE&#8209;2026&#8209;53359)</sub>
 </td>
 <td align="center" width="220">
 <img src="assets/sym-zapscape.svg" width="140" alt="Zapscape">
 <br><b>Zapscape</b>
-<br><sub>(CVE-2026-64561)</sub>
+<br><sub>(CVE&#8209;2026&#8209;64561)</sub>
 </td>
 </tr>
 </table>
